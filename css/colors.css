@@ -169,6 +169,10 @@ ul.iconsList li a:hover, ul.iconsList i {
 	color:#fff;
 }
 
+.navbar-brand {
+	height: 88px;
+}
+
 /* END MAIN MENU
 ================================================== */
 
