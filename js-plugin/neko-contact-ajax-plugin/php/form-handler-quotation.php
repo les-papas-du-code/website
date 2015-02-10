@@ -4,8 +4,8 @@ if ( !$_POST ) exit;
 if ( !defined( "PHP_EOL" ) ) define( "PHP_EOL", "\r\n" );
 
 
-$to = "yourmail@yourdomain.com";
-$subject = "Website contact form ";
+$to = "cyrilb@papasducode.fr";
+$subject = "Website contact form";
 
 
 
@@ -28,13 +28,13 @@ $quoteType = @$_POST["quoteType"];
 $errors = array();
  //php verif name
 if(isset($_POST["name"])){
- 
+
         if (!$name) {
             $errors[] = "You must enter a name.";
         } elseif(strlen($name) < 2)  {
             $errors[] = "Name must be at least 2 characters.";
         }
- 
+
 }
     //php verif email
 if(isset($_POST["email"])){
@@ -95,7 +95,7 @@ if ($errors) {
 
     $mailBody  = "You have been contacted by $name" . PHP_EOL . PHP_EOL;
     $mailBody .= (!empty($company))?'Company: '. PHP_EOL.$company. PHP_EOL . PHP_EOL:'';
-    $mailBody .= (!empty($quoteType))?'project Type: '. PHP_EOL.$quoteType. PHP_EOL . PHP_EOL:''; 
+    $mailBody .= (!empty($quoteType))?'project Type: '. PHP_EOL.$quoteType. PHP_EOL . PHP_EOL:'';
     $mailBody .= "Message :" . PHP_EOL;
     $mailBody .= $message . PHP_EOL . PHP_EOL;
     $mailBody .= "You can contact $name via email, $email." . PHP_EOL . PHP_EOL;
@@ -112,7 +112,7 @@ if ($errors) {
     }
 }
 
-// FUNCTIONS 
+// FUNCTIONS
 function validEmail($email) {
     $isValid = true;
     $atIndex = strrpos($email, "@");

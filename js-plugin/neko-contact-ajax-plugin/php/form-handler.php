@@ -4,8 +4,8 @@ if ( !$_POST ) exit;
 if ( !defined( "PHP_EOL" ) ) define( "PHP_EOL", "\r\n" );
 
 
-$to = "yourmail@yourdomain.com";
-$subject = "Website contact form ";
+$to = "cyrilb@papasducode.fr";
+$subject = "Website contact form";
 
 
 
@@ -27,13 +27,13 @@ $verify    = @$_POST["verify"];
 $errors = array();
  //php verif name
 if(isset($_POST["name"])){
- 
+
         if (!$name) {
             $errors[] = "You must enter a name.";
         } elseif(strlen($name) < 2)  {
             $errors[] = "Name must be at least 2 characters.";
         }
- 
+
 }
     //php verif email
 if(isset($_POST["email"])){
@@ -43,16 +43,6 @@ if(isset($_POST["email"])){
         $errors[] = "You must enter a valid email.";
     }
 }
-    //php verif phone
-if(isset($_POST["phone"])){
-    if (!$phone) {
-        $errors[] = "You must enter a correct phone number.";
-    }elseif ( !is_numeric( $phone ) ) {
-        $errors[]= 'Your phone number can only contain digits.';
-    }
-}
-
-
 
 //php verif comment
 if(isset($_POST["comment"])){
@@ -62,15 +52,6 @@ if(isset($_POST["comment"])){
         } else {
             $errors[] = "Message must be at least 10 characters.";
         }
-    }
-}
-
-    //php verif captcha
-if(isset($_POST["verify"])){
-    if (!$verify) {
-        $errors[] = "You must enter the security code";
-    } else if (md5($verify) != $_SESSION['nekoCheck']['verify']) {
-        $errors[] = "The security code you entered is incorrect ";
     }
 }
 
@@ -96,7 +77,7 @@ if ($errors) {
 
     $mailBody  = "You have been contacted by $name" . PHP_EOL . PHP_EOL;
     $mailBody .= (!empty($company))?'Company: '. PHP_EOL.$company. PHP_EOL . PHP_EOL:'';
-    $mailBody .= (!empty($quoteType))?'project Type: '. PHP_EOL.$quoteType. PHP_EOL . PHP_EOL:''; 
+    $mailBody .= (!empty($quoteType))?'project Type: '. PHP_EOL.$quoteType. PHP_EOL . PHP_EOL:'';
     $mailBody .= "Message :" . PHP_EOL;
     $mailBody .= $message . PHP_EOL . PHP_EOL;
     $mailBody .= "You can contact $name via email, $email.";
@@ -113,7 +94,7 @@ if ($errors) {
     }
 }
 
-// FUNCTIONS 
+// FUNCTIONS
 function validEmail($email) {
     $isValid = true;
     $atIndex = strrpos($email, "@");
