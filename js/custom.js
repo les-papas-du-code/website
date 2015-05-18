@@ -1096,7 +1096,7 @@ function initialize(id) {
     var overlayTitle = 'Nos bureaux';
 
     var locations = [
-        ['Les papas du code @ Cowork in Grenoble', '12 Rue Servan, 38000 Grenoble', 45.191347,5.733225],
+        ['Les papas du code', '25, Avenue de Constantine', 45.160258, 5.733994],
     ];
 
 /*** DON'T CHANGE ANYTHING PASSED THIS LINE ***/

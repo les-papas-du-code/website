@@ -89,7 +89,7 @@ h2.subTitle:after, h1.noSubtitle:after{
 /* LINKS AND BUTTONS
 ================================================== */
 
-a {
+a,span {
 	color:#4FAFC2;
 }
 a:hover, .scrollspyNav .active a {
