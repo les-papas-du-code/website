@@ -196,7 +196,7 @@ h1, h2, h3, h4, h5, h6, legend {
 	font-weight: 300;
 	font-family: 'Open Sans', sans-serif;
 }
-h1 {
+.slice h2 {
 	font-size: 44px;
 	line-height: 44px;
 	font-weight: 300;
@@ -208,7 +208,7 @@ h1 {
 	margin-bottom: 17px;
 }
 
-h1.noSubtitle{
+h2.noSubtitle{
 	margin-bottom:90px;
 }
 
@@ -246,8 +246,11 @@ h1.noSubtitle{
 	letter-spacing: 0.1em;
 }
 
+.rowContent h3{
 
-h2 {
+}
+
+h3 {
 	font-size:24px;
 	line-height: 24px;
 	font-weight: 300;
@@ -256,7 +259,7 @@ h2 {
 	margin-bottom:17px;
 
 }
-h2.subTitle{
+h3.subTitle{
 	font-size:24px;
 	line-height: 24px;
 	font-weight: 300;
@@ -264,8 +267,9 @@ h2.subTitle{
 	padding:0;
 	margin-bottom:90px;
 	text-align:center;
+	letter-spacing: 0;
 }
-h2.subTitle:after, h1.noSubtitle:after {
+h3.subTitle:after, h2.noSubtitle:after {
 	display:block;
 	height:1px;
 	width:100px;
@@ -276,7 +280,7 @@ h2.subTitle:after, h1.noSubtitle:after {
 	left:50%;
 }
 
-h1.noSubtitle:after {
+h2.noSubtitle:after {
 	bottom:-29px;
 }
 
@@ -284,14 +288,14 @@ h1.noSubtitle:after {
 h1.bigTitle:after, .boxWrapper h1:after, .pricingBloc h1:after, .team h1:after, .iconBoxV3 h1:after, #sliderWrapper h1:after, .fullwidthbanner-container h1:after, .camera_caption h1:after, .caption h1:after, .bulle h1:after, .iconBoxV2 .iconBox-body h1:after {
 	content:none
 }
-h3, legend {
+h4, legend {
 	font-size: 18px;
 	line-height: 22px;
 	margin-bottom: 14px;
 	font-weight: 600;
 	letter-spacing: -0.06em;
 }
-h4 {
+h5 {
 	font-size: 14px;
 	line-height: 22px;
 	margin-bottom: 6px;
@@ -299,19 +303,12 @@ h4 {
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight:300;
 }
-h5 {
+h6 {
 	font-style: normal;
 	font-weight: 300;
 	font-size: 1.116em;
 	line-height: 1.5714em;
 	margin-bottom: 0.916em;
-}
-h6 {
-	font-weight: 300;
-	font-style: italic;
-	margin-bottom: 2em;
-	font-size: 1em;
-	line-height:1em;
 }
 h1 small, h2 small, h3 small, h4 small {
 	text-transform:none;
@@ -449,7 +446,7 @@ hr {
 .ctaBoxFullwidth{padding:0;}
 
 .ctaBox a {margin-top:22px;}
-.ctaBox h1 {
+.ctaBox h2 {
 	font-size:22px;
 	line-height: 33px;
 	margin-bottom:0;
@@ -718,9 +715,10 @@ margin-bottom:-44px;
 	width:100%;
 	text-align:left;
 	display: inline-block;
+	letter-spacing: 0.1em;
 }
 #flexHome h1:after  {content:''}
-#flexHome h2 {text-align:left; display: inline-block;}
+#flexHome h2 {text-align:left; display: inline-block;font-size:24px; line-height: 24px;}
 .flexslider .slides > li {height:110px;}
 
 .flex-control-nav{position:static; margin-top:22px;}
