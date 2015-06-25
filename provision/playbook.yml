@@ -1,0 +1,85 @@
+---
+- name: set up the server
+  hosts: all
+  sudo: yes
+  tasks:
+    - name: update package lists
+      apt: update-cache=yes
+    - name: upgrade all packages
+      apt: upgrade=dist
+    - name: install basic and necessary packages
+      apt: pkg={{ item }} state=latest
+      tags: [packages]
+      with_items:
+        - vim
+        - git
+        - nginx
+        - nodejs
+        - npm
+        - exim4
+    - name: add a 'node' alias for nodejs
+      file: path=/usr/local/bin/node state=link src=/usr/bin/nodejs
+    - name: install grunt
+      npm: name=grunt-cli state=present global=yes
+
+- name: set up a mail server
+  hosts: all
+  sudo: yes
+  tasks:
+    - name: install our copy of update_exim4.conf.conf
+      copy: src=update-exim4.conf.conf dest=/etc/exim4/update-exim4.conf.conf
+    - name: generate exim4 configuration
+      command: update-exim4.conf
+    - name: reload exim4
+      service: name=exim4 state=reloaded
+
+- name: set up the architecture for the ppdc website
+  hosts: all
+  sudo: yes
+  tasks:
+    - name: create the user group
+      group: name=ppdc-website state=present system=yes
+    - name: add www-data to the user group
+      user: name=www-data append=yes groups=ppdc-website
+    - name: create the user and its home directory
+      user: name=ppdc-website state=present system=yes group=ppdc-website
+    - name: allow us to connect directly as the website user
+      shell: "mkdir -p -m 700 ~ppdc-website/.ssh && cp ~{{ansible_ssh_user}}/.ssh/authorized_keys ~ppdc-website/.ssh && chown -R ppdc-website: ~ppdc-website/.ssh/ creates=/home/ppdc-website/.ssh/authorized_keys"
+    - name: create the directory under /srv
+      file: path=/srv/ppdc-website state=directory owner=ppdc-website group=ppdc-website mode=750
+
+- name: set up the ppdc website
+  hosts: all
+  remote_user: ppdc-website
+  vars:
+    ansible_ssh_user: "ppdc-website"
+  tasks:
+    - name: checkout the repository
+      git: repo=ssh://git@bitbucket.org/lespapasducode/website.git dest=/srv/ppdc-website/ accept_hostkey=yes
+    - name: install ghost's dependencies
+      command: chdir=/srv/ppdc-website/blog npm install --production
+    - name: run ghost's gruntfile (init)
+      command: chdir=/srv/ppdc-website/blog grunt init
+    - name: run ghost's gruntfile (prod)
+      command: chdir=/srv/ppdc-website/blog grunt prod
+
+- name: run the ppdc website
+  hosts: all
+  sudo: yes
+  tasks:
+    - name: install systemd socket unit
+      command: systemctl enable /srv/ppdc-website/provision/ppdc-blog.socket
+    - name: install systemd service unit
+      command: systemctl link /srv/ppdc-website/provision/ppdc-blog.service
+    - name: start socket unit
+      command: systemctl start ppdc-blog.socket
+    - name: stop service unit
+      command: systemctl stop ppdc-blog.service
+    - name: remove default nginx virtual host
+      file: path=/etc/nginx/sites-enabled/default state=absent
+    - name: install nginx configuration
+      copy: src=nginx.conf dest=/etc/nginx/sites-available/ppdc-website.conf
+    - name: enable nginx configuration
+      file: path=/etc/nginx/sites-enabled/ppdc-website.conf state=link src=../sites-available/ppdc-website.conf
+    - name: reload nginx
+      service: name=nginx state=reloaded
