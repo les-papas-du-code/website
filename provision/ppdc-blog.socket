@@ -1,0 +1,11 @@
+[Unit]
+Description=Papas du Code website's Ghost blog (socket)
+
+[Socket]
+ListenStream=/run/ppdc-blog.sock
+SocketUser=ppdc-website
+SocketGroup=ppdc-website
+SocketMode=660
+
+[Install]
+WantedBy=sockets.target

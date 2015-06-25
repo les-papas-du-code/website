@@ -1,0 +1,9 @@
+[Unit]
+Description=Papas du Code website's Ghost blog
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/nodejs index
+Environment=NODE_ENV=production
+WorkingDirectory=/srv/ppdc-website/blog/
+User=ppdc-website
