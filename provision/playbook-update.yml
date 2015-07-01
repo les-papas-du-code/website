@@ -1,0 +1,36 @@
+---
+- name: set up the ppdc website
+  hosts: all
+  remote_user: ppdc-website
+  vars:
+    ansible_ssh_user: "ppdc-website"
+  tasks:
+    - name: checkout the repository
+      git: repo=ssh://git@bitbucket.org/lespapasducode/website.git dest=/srv/ppdc-website/ accept_hostkey=yes
+    - name: install ghost's dependencies
+      command: chdir=/srv/ppdc-website/blog npm install --production
+    - name: run ghost's gruntfile (init)
+      command: chdir=/srv/ppdc-website/blog grunt init
+    - name: run ghost's gruntfile (prod)
+      command: chdir=/srv/ppdc-website/blog grunt prod
+
+- name: run the ppdc website
+  hosts: all
+  sudo: yes
+  tasks:
+    - name: install systemd socket unit
+      command: systemctl enable /srv/ppdc-website/provision/ppdc-blog.socket
+    - name: install systemd service unit
+      command: systemctl link /srv/ppdc-website/provision/ppdc-blog.service
+    - name: start socket unit
+      command: systemctl start ppdc-blog.socket
+    - name: stop service unit
+      command: systemctl stop ppdc-blog.service
+    - name: remove default nginx virtual host
+      file: path=/etc/nginx/sites-enabled/default state=absent
+    - name: install nginx configuration
+      copy: src=nginx.conf dest=/etc/nginx/sites-available/ppdc-website.conf
+    - name: enable nginx configuration
+      file: path=/etc/nginx/sites-enabled/ppdc-website.conf state=link src=../sites-available/ppdc-website.conf
+    - name: reload nginx
+      service: name=nginx state=reloaded
