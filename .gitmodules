@@ -1,4 +1,0 @@
-[submodule "blog"]
-	path = blog
-	url = ssh://git@bitbucket.org/lespapasducode/blog.git
-	branch = ppdc
